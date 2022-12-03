@@ -4,6 +4,11 @@ class AuthService{
   
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  //Auth Change User Stream
+  Stream<User?> get user{
+    return _auth.authStateChanges();
+  }
+
   //Sign In Anonymously
   Future<dynamic> signInAnom() async {
     try{
