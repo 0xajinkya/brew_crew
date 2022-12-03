@@ -1,3 +1,4 @@
+import 'package:brew_crew/models/user.dart';
 import 'package:brew_crew/services/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,7 @@ class _SignInState extends State<SignIn> {
               print('Error Signing In');
             } else {
               print('Signed In');
-              print(result);
+              print(result.uid);
             }
           },
           ),
