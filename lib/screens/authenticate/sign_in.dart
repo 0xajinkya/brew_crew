@@ -27,6 +27,12 @@ class _SignInState extends State<SignIn> {
           child: Text('Sign In Anom'),
           onPressed: () async {
             dynamic result = await _auth.signInAnom();
+            if(result == null){
+              print('Error Signing In');
+            } else {
+              print('Signed In');
+              print(result);
+            }
           },
           ),
       ),

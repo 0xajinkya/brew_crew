@@ -19,6 +19,8 @@ class AuthService{
 
   //Sign In With Email And Password
 
+  
+
 
   //Register With Email And Password
 
