@@ -1,7 +1,7 @@
-class User{
+class MyUser{
 
   late final String uid;
 
-  User({ required this.uid });
+  MyUser({ required this.uid });
 
 }

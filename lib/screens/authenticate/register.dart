@@ -1,3 +1,5 @@
+import 'package:brew_crew/shared/constants.dart';
+import 'package:brew_crew/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:brew_crew/services/auth.dart';
 
@@ -5,7 +7,7 @@ import 'package:brew_crew/services/auth.dart';
 class Register extends StatefulWidget {
 
   final Function toggleView;
-  const Register({required this.toggleView});
+  const Register({super.key, required this.toggleView});
 
   @override
   State<Register> createState() => _RegisterState();
@@ -16,6 +18,7 @@ class _RegisterState extends State<Register> {
   String email = '';
   String password = '';
   String error = '';
+  bool loading = false;
 
   final AuthService _auth = AuthService();
   final _formkey = GlobalKey<FormState>();
@@ -24,7 +27,7 @@ class _RegisterState extends State<Register> {
 
 
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
@@ -48,6 +51,7 @@ class _RegisterState extends State<Register> {
                 children: <Widget>[
                   SizedBox(height: 20),
                   TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Email'),
                     validator: (val) => val!.isEmpty ? 'Enter An Email': null,
                     onChanged: (val){
                       setState(() => email = val);
@@ -55,6 +59,7 @@ class _RegisterState extends State<Register> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    decoration: textInputDecoration,
                     validator: (val) => val!.length < 6 ? 'Enter Strong Password': null,
                     obscureText: true,
                     onChanged: (val){
@@ -65,13 +70,18 @@ class _RegisterState extends State<Register> {
                   ElevatedButton(
                       onPressed: () async {
                         if(_formkey.currentState!.validate()){
+                          setState(() {
+                            loading = true;
+                          });
                             print(email);
                             print(password);
                             dynamic result = _auth.registerWithEmailAndPassword(email, password);
                             print(result);
-                            if(result == null){
+                            if(result == ''){
+                              print('Here');
                               setState(() {
                                 error = 'Please Supply A Valid Email';
+                                loading = false;
                               });
                             }
                         }
